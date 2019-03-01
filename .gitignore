@@ -1,0 +1,12 @@
+*
+!.bash_profile
+!.bashrc
+!.emacs
+!.gitconfig
+!.gitexcludes
+!.gitignore
+!.inputrc
+!.ispell_english
+!.vimrc
+!.zshrc
+!Brewfile
