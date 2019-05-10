@@ -2,9 +2,8 @@
 
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -14,10 +13,6 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package which-key
-  :ensure t
-  :config (which-key-mode))
-
 ;; General workspace and environment 
 (global-display-line-numbers-mode)
 (tool-bar-mode -1)
@@ -25,11 +20,6 @@
 (window-divider-mode -1)
 (set-face-attribute 'default nil :height 180)
 (global-visual-line-mode)
-
-(global-set-key (kbd "M-h") 'windmove-left)
-(global-set-key (kbd "M-l") 'windmove-right)
-(global-set-key (kbd "M-k") 'windmove-up)
-(global-set-key (kbd "M-j") 'windmove-down)
 
 ;; Terminal 
 (setq explicit-shell-file-name "/usr/local/bin/bash")
@@ -93,10 +83,14 @@
 (use-package ob-ipython
   :ensure t)
 
+(use-package ess
+  :ensure t)
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)
    (ipython . t)
+   (R . t)
    ))
 
 ;; export settings
@@ -147,6 +141,22 @@
 ;; Spell Check
 (setq ispell-program-name "/usr/local/Cellar/ispell/3.4.00/bin/ispell")
 
+
+;; Key bindings to move between windows with Vim keys
+(global-set-key (kbd "M-h") 'windmove-left)
+(global-set-key (kbd "M-l") 'windmove-right)
+(global-set-key (kbd "M-k") 'windmove-up)
+(global-set-key (kbd "M-j") 'windmove-down)
+
+
+(use-package elpy
+  :ensure t
+  :config
+  (elpy-enable))
+
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -167,7 +177,7 @@
  '(org-export-backends (quote (ascii html icalendar latex md odt)))
  '(package-selected-packages
    (quote
-    (multi-term wind-move ox-pandoc ob-ipython sml-modline sml-modeline sml-mode docker-compose-mode yaml-mode dockerfile-mode magit which-key try all-the-icons exec-path-from-shell emmet-mode neotree evil-surround org-bullets ein markdown-mode+ markdown-mode org-link-minor-mode dracula-theme helm evil-visual-mark-mode)))
+    (ess elpy multi-term wind-move ox-pandoc ob-ipython sml-modline sml-modeline sml-mode docker-compose-mode yaml-mode dockerfile-mode magit which-key try all-the-icons exec-path-from-shell emmet-mode neotree evil-surround org-bullets ein markdown-mode+ markdown-mode org-link-minor-mode dracula-theme helm evil-visual-mark-mode)))
  '(show-paren-mode t)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(visible-bell nil))
