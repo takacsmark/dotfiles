@@ -20,6 +20,7 @@
 (window-divider-mode -1)
 (set-face-attribute 'default nil :height 180)
 (global-visual-line-mode)
+(global-auto-revert-mode t)
 
 ;; Terminal 
 (setq explicit-shell-file-name "/usr/local/bin/bash")
@@ -91,6 +92,7 @@
  '((python . t)
    (ipython . t)
    (R . t)
+   (shell . t)
    ))
 
 ;; export settings
@@ -171,13 +173,14 @@
    (quote
     ("274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" default)))
  '(display-line-numbers-type (quote relative))
+ '(global-visual-line-mode t)
  '(ido-enable-flex-matching t)
  '(ido-mode (quote both) nil (ido))
  '(org-agenda-files (quote ("~/org/index.org")))
  '(org-export-backends (quote (ascii html icalendar latex md odt)))
  '(package-selected-packages
    (quote
-    (ess elpy multi-term wind-move ox-pandoc ob-ipython sml-modline sml-modeline sml-mode docker-compose-mode yaml-mode dockerfile-mode magit which-key try all-the-icons exec-path-from-shell emmet-mode neotree evil-surround org-bullets ein markdown-mode+ markdown-mode org-link-minor-mode dracula-theme helm evil-visual-mark-mode)))
+    (ob-shell ob-sh ess elpy multi-term wind-move ox-pandoc ob-ipython sml-modline sml-modeline sml-mode docker-compose-mode yaml-mode dockerfile-mode magit which-key try all-the-icons exec-path-from-shell emmet-mode neotree evil-surround org-bullets ein markdown-mode+ markdown-mode org-link-minor-mode dracula-theme helm evil-visual-mark-mode)))
  '(show-paren-mode t)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(visible-bell nil))
