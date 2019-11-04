@@ -1,5 +1,8 @@
+;;;; General workspace and environment
+;; Disables the startup message
 (setq inhibit-startup-message t)
 
+;; Sets up package archives and use-package for general purposes
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -13,7 +16,7 @@
 (eval-when-compile
   (require 'use-package))
 
-;; General workspace and environment 
+;; Window settings 
 (global-display-line-numbers-mode)
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
@@ -22,35 +25,37 @@
 (global-visual-line-mode)
 (global-auto-revert-mode t)
 
-;; Terminal 
-(setq explicit-shell-file-name "/usr/local/bin/bash")
-(add-hook 'term-mode-hook (lambda () (display-line-numbers-mode -1)))
+;; Key bindings to move between windows with Vim keys
+(global-set-key (kbd "M-h") 'windmove-left)
+(global-set-key (kbd "M-l") 'windmove-right)
+(global-set-key (kbd "M-k") 'windmove-up)
+(global-set-key (kbd "M-j") 'windmove-down)
 
-
-;; store all backup and autosave files in the tmp dir
+;; Stores all backup and autosave files in the tmp dir
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; smart mode line
-;; (use-package sml-modeline
-;; 	     :ensure t
-;; 	     :config
-;; (sml-modeline-mode))
-
-;; use path from shell
+;; Use path from shell (won't work on Windows)
 (use-package exec-path-from-shell
   :ensure t :config (exec-path-from-shell-initialize))
 
+;; Breaks long lines
 (global-visual-line-mode t)
-;; Evil mode
+
+;; Spell Check
+(setq ispell-program-name "/usr/local/Cellar/ispell/3.4.00/bin/ispell")
+
+
+;;;; Evil mode
 (use-package evil
   :ensure t
   :config
 
   (evil-mode 1)
 
+  ;; Fix Vim up and down bindings in visual line mode
   (evil-define-minor-mode-key 'motion 'visual-line-mode "j" 'evil-next-visual-line)
   (evil-define-minor-mode-key 'motion 'visual-line-mode "k" 'evil-previous-visual-line)
 
@@ -68,97 +73,70 @@
     :config
     (global-evil-surround-mode 1)))
 
-
-;; Org mode 
-;; (require 'org)
-;; (require 'org-bullets)
-;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (setq org-todo-keywords
-      '((sequence "TODO" "STARTED" "|" "DONE")))
+    '((sequence "TODO" "STARTED" "|" "DONE")))
 (setq org-todo-keyword-faces
-      '(("STARTED" . "cornflower blue")))
+    '(("STARTED" . "cornflower blue")))
 
 (setq org-babel-python-command "python3")
 (setq org-confirm-babel-evaluate nil)
 
-(use-package ob-ipython
-  :ensure t)
+;; iPython
+;;(use-package ob-ipython
+;;  :ensure t
+;;  :config
+;;  (setq ob-ipython-command "/usr/local/anaconda3/bin/jupyter"))
 
+;; Emacs Speaks Statistics (ess) used for R
 (use-package ess
   :ensure t)
-
+;; Languages for Orgmode
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)
    (ipython . t)
    (R . t)
    (shell . t)
+   (plantuml . t)
    ))
 
-;; export settings
-;;define-key global-map "\C-cc" 'org-capture)
+(setq org-plantuml-jar-path
+      (expand-file-name "~/development/plantuml.jar"))
+
+;;;; Export settings
 (setq org-export-coding-system 'utf-8)
 (setq org-export-allow-bind-keywords t)
+(add-to-list 'org-latex-packages-alist '("" "listingsutf8"))
 
 (use-package ox-pandoc
-  :ensure t)
+  :ensure t
+  :after org
+  :defer t
+  :config
+  (setq org-pandoc-options '((standalone . t)))
+  (setq org-pandoc-options-for-latex-pdf '((pdf-engine . "pdflatex"))))
 
 (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
 
-;; Neotree
-;; Initial config based on https://github.com/anmonteiro/dotfiles/blob/master/.emacs.d/customizations/setup-neotree.el
-(use-package neotree
-  :ensure t
-  :config
-  
-  (global-set-key [f8] 'neotree-toggle)
 
-  ;; (use-package all-the-icons
-  ;;   :ensure t)
+;;;; PDF preview
+(setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
 
-  (setq neo-theme (if window-system 'ascii 'arrow))
+(use-package pdf-tools
+  :ensure t)
 
-  ;; every time when the neotree window is  opened, it will try to find current
-  ;; file and jump to node.
-  (setq-default neo-smart-open nil)
+(setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+      TeX-source-correlate-start-server t)
 
-  ;; change root automatically when running `projectile-switch-project`
-  ;;(setq projectile-switch-project-action 'neotree-projectile-action)
-  (setq neo-vc-integration '(face char))
-
-  (setq neo-show-hidden-files t)
-  (setq neo-toggle-window-keep-p t)
-  (setq neo-force-change-root t)
- 
-  (add-hook 'neotree-mode-hook
-    (lambda ()
-      (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
-
-  (add-hook 'neo-after-create-hook
-	    (lambda (&rest _) (display-line-numbers-mode -1)))
-
-  (set-face-attribute 'neo-vc-added-face nil
-                    :foreground "green4"))
-
-;; Spell Check
-(setq ispell-program-name "/usr/local/Cellar/ispell/3.4.00/bin/ispell")
-
-
-;; Key bindings to move between windows with Vim keys
-(global-set-key (kbd "M-h") 'windmove-left)
-(global-set-key (kbd "M-l") 'windmove-right)
-(global-set-key (kbd "M-k") 'windmove-up)
-(global-set-key (kbd "M-j") 'windmove-down)
-
-
+;;;; PROGRAMMING
+;;; Python editing
 (use-package elpy
   :ensure t
   :config
   (elpy-enable))
 
 
-
-
+;;;; Custom variables set in EMACS
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -180,7 +158,20 @@
  '(org-export-backends (quote (ascii html icalendar latex md odt)))
  '(package-selected-packages
    (quote
-    (ob-shell ob-sh ess elpy multi-term wind-move ox-pandoc ob-ipython sml-modline sml-modeline sml-mode docker-compose-mode yaml-mode dockerfile-mode magit which-key try all-the-icons exec-path-from-shell emmet-mode neotree evil-surround org-bullets ein markdown-mode+ markdown-mode org-link-minor-mode dracula-theme helm evil-visual-mark-mode)))
+    (ox-org ox-pandoc pdf-tools ox-latex ob-shell ob-sh ess elpy multi-term wind-move ob-ipython sml-modline sml-modeline sml-mode docker-compose-mode yaml-mode dockerfile-mode magit which-key try all-the-icons exec-path-from-shell emmet-mode evil-surround org-bullets ein markdown-mode+ markdown-mode org-link-minor-mode helm evil-visual-mark-mode)))
+ '(safe-local-variable-values
+   (quote
+    ((eval add-hook
+	   (quote TeX-after-compilation-finished-functions)
+	   (function TeX-revert-document-buffer))
+     (eval add-hook
+	   (quote after-save-hook)
+	   (quote org-publish-current-file)
+	   t t)
+     (eval add-hook
+	   (quote after-save-hook)
+	   (quote org-latex-publish-to-pdf)
+	   t t))))
  '(show-paren-mode t)
  '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
  '(visible-bell nil))
