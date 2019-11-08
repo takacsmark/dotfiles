@@ -27,6 +27,7 @@
 (tool-bar-mode -1)
 (toggle-scroll-bar -1)
 (window-divider-mode -1)
+(setq pop-up-windows nil)
 
 ;; Buffer editor settings
 (global-display-line-numbers-mode)
