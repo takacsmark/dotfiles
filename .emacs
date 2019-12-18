@@ -103,7 +103,7 @@
 (setq org-export-allow-bind-keywords t)
 (add-to-list 'org-latex-packages-alist '("" "listingsutf8"))
 
-;; Pandocs pre-requisites and ox-pandoc for epub publishing
+;; Pandoc pre-requisites and ox-pandoc for epub publishing
 (use-package dash
   :ensure t)
 
@@ -113,10 +113,23 @@
 (use-package ox-pandoc
   :load-path "~/.emacs.d/contrib/ox-pandoc/"
   :after (dash ht)
+  :ensure t
   :defer t)
 
-
 ;;;; Document editing
+;; Markdown mode
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown")
+  :config
+  (custom-set-variables
+   '(markdown-command "/usr/local/bin/pandoc")))
+
+
 ;; PDF tools
 (setenv "PKG_CONFIG_PATH" "/usr/local/Cellar/zlib/1.2.8/lib/pkgconfig:/usr/local/lib/pkgconfig:/opt/X11/lib/pkgconfig")
 
@@ -124,7 +137,6 @@
   :ensure t
   :config
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
-
 
 ;;;; Programming
 ;; Python editing
@@ -142,9 +154,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-pandoc-options (quote ((standalone . t) (mathjax . t))))
  '(package-selected-packages
    (quote
-    (ess pdf-tools ob-ipython elpy evil-surround evil-org evil ox-pandoc)))
+    (markdown-mode ox-pandoc ess pdf-tools ob-ipython elpy evil-surround evil-org evil)))
  '(safe-local-variable-values
    (quote
     ((eval add-hook
