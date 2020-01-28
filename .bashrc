@@ -13,6 +13,8 @@ fi
 alias l='ls -F -G'
 alias ll='ls -alG'
 
+export PATH="/usr/local/opt/libpq/bin:/usr/local/anaconda3/bin:$PATH"
+
 GIT_PS1_SHOWDIRTYSTATE=true
 
 export CLICOLOR=1
