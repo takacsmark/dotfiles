@@ -13,7 +13,8 @@ fi
 alias l='ls -F -G'
 alias ll='ls -alG'
 
-export PATH="/usr/local/opt/libpq/bin:/usr/local/anaconda3/bin:$PATH"
+export PATH="/usr/local/opt/libpq/bin:/usr/local/anaconda3/bin:$PATH:/Users/takacsmark/Development/_devtools/flutter/bin"
+#export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 GIT_PS1_SHOWDIRTYSTATE=true
 

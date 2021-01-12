@@ -49,7 +49,7 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; Spell Check
-(setq ispell-program-name "/usr/local/Cellar/ispell/3.4.00/bin/ispell")
+(setq ispell-program-name "/usr/local/Cellar/ispell/3.4.01/bin/ispell")
 
 
 ;;;; Evil mode
@@ -154,19 +154,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-pandoc-options (quote ((standalone . t) (mathjax . t))))
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-safe-themes
+   '("0511293cecfff89edd24781b0c31b42ee8017ae3a53c292befd51ac94a63c031" "197cefea731181f7be51e9d498b29fb44b51be33484b17416b9855a2c4243cb1" default))
+ '(fci-rule-color "#4C566A")
+ '(markdown-command "/usr/local/bin/pandoc")
+ '(org-pandoc-options '((standalone . t) (mathjax . t)))
  '(package-selected-packages
-   (quote
-    (markdown-mode ox-pandoc ess pdf-tools ob-ipython elpy evil-surround evil-org evil)))
+   '(nordless-theme nord-theme markdown-mode ox-pandoc ess pdf-tools ob-ipython elpy evil-surround evil-org evil))
  '(safe-local-variable-values
-   (quote
-    ((eval add-hook
-	   (quote TeX-after-compilation-finished-functions)
-	   (function TeX-revert-document-buffer))
-     (eval add-hook
-	   (quote after-save-hook)
-	   (quote org-publish-current-file)
-	   t t)))))
+   '((eval add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+     (eval add-hook 'after-save-hook 'org-publish-current-file t t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
