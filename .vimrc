@@ -39,12 +39,12 @@ Plug 'plasticboy/vim-markdown'
 Plug 'hisaknown/jupyterkernel.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'evanleck/vim-svelte'
 Plug 'leafgarland/typescript-vim'
 Plug 'mbbill/undotree'
 Plug 'aklt/plantuml-syntax'
 Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'tyru/open-browser.vim'
+Plug 'jparise/vim-graphql'
 call plug#end()
 
 set t_Co=256
