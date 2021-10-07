@@ -47,10 +47,52 @@ Plug 'tyru/open-browser.vim'
 Plug 'jparise/vim-graphql'
 call plug#end()
 
-set t_Co=256
 
+"let g:PaperColor_Theme_Options = {
+"  \   'theme': {
+"  \     'default.dark': { 
+"  \       'allow_bold': 1,
+"  \       'override' : {
+"  \         'color00' : ['#100d23', ''],
+"  \         'color01' : ['#ff1865', ''],
+"  \         'color03' : ['#76c1ff', ''],
+"  \         'color05' : ['#6766B3', ''],
+"  \         'color06' : ['#d57bff', ''],
+"  \         'color07' : ['#00b0ff', ''],
+"  \         'color11' : ['#00ff9c', ''],
+"  \         'color14' : ['#fffc58', ''],
+"  \         'color17' : ['#fffc58', ''],
+"  \         'cursor_fg' : ['#9dff00', ''],
+"  \         'cursorlinenr_fg' : ['#00ffc8', ''],
+"  \         'linenumber_bg' : ['#050513', ''],
+"  \         'linenumber_fg' : ['#3d5afe', ''],
+"  \         'popupmenu_bg' : ['#012113', ''],
+"  \         'popupmenu_fg' : ['#ffffff', ''],
+"  \         'search_bg' : ['#ffffff', ''],
+"  \         'search_fg' : ['#ffffff', ''],
+"  \         'vertsplit_bg' : ['#ffffff', ''],
+"  \         'vertsplit_fg' : ['#ffffff', ''],
+"  \         'statusline_active_fg' : ['#ffffff', ''],
+"  \         'statusline_inactive_fg' : ['#ffffff', ''],
+"  \         'visual_fg' : ['#ffffff', ''],
+"  \         'error_fg' : ['#ffffff', ''],
+"  \         'cursorline' : ['#ffffff', ''],
+"  \         'folded_fg' : ['#ffffff', ''],
+"  \         'wildmenu_fg' : ['#ffffff', ''],
+"  \         'matchparen_fg' : ['#ffffff', ''],
+"  \         'tabline_bg':          ['#372963', '24'],
+"  \         'tabline_active_fg':   ['#00ff9c', '238'],
+"  \         'tabline_active_bg':   ['#100d23', '254'],
+"  \         'tabline_inactive_fg': ['#7877b3', '255'],
+"  \         'tabline_inactive_bg': ['#1e1d45', '31'],
+"  \       }
+"  \     }
+"  \   }
+"  \ }
+
+set termguicolors 
 set background=dark
-colorscheme PaperColor
+colorscheme CyberpunkUmbra
 
 let g:netrw_browse_split=2
 let g:netrw_banner=0
